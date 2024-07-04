@@ -53,6 +53,14 @@ webmaster_verifications:
   baidu: # fill in your Baidu verification code
   facebook: # fill in your Facebook verification code
 
+asciidoc: {}
+
+asciidoctor:
+  attributes:
+    icons: font
+    source-highlighter: highlight.js
+    custom-css: assets/css/asciidoctor.css
+
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
