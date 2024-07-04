@@ -12,7 +12,7 @@ class Dev < Thor
 
   desc "serve", "Starts a server"
   def serve
-    Bundler.unbundled_exec("jekyll serve --watch --drafts --config _config.yml,_config.dev.yml")
+    Kernel.exec("jekyll serve --watch --drafts --config _config.yml,_config.dev.yml")
   end
 
   desc "post", "Creates a new post"

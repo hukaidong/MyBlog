@@ -15,6 +15,10 @@
   icon: "fab fa-linkedin"
   url:  "https://www.linkedin.com/in/kaidong-hu-30611696/"
 
+- type: handshake
+  icon: "fa-solid fa-h"
+  url: "https://rutgers.joinhandshake.com/profiles/9925188"
+
 - type: email
   icon: "fas fa-envelope"
   noblank: true # open link in current tab

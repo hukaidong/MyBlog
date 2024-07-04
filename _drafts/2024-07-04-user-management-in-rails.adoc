@@ -1,0 +1,40 @@
+---
+title: "Design a user management system in rails (for game server)"
+date: 2024-07-04 11:40:12 -0400
+published: true
+categories: [Game-Server]
+tags: [rails, devise]
+toc: true
+---
+:icons: font
+
+
+NOTE: This is the record of user management components in https://github.com/kd-research/GameAutoMakeServer[+++<span class="fab fa-github" />+++ Game Server Project]
+
+== Concepts of Users
+
+- A *user* is an account identified by its email address and owned by the email owner.
+- A *user* can be created from the registration form.
+- A *user* can also be imported from an Oauth entry.
+
+== User views
+
+When user is not logged in. It should be redirected to the `guest#dashboard` page. It provides access to user login process and any functions that does not need an authentication.
+
+Otherwise, the `user#dashboard` page shows multiple entrance to whatever application that can be accessed by the user.
+
+== User resources
+
+A *user* is split into three components. Each of them manages user identification (core) data, user profile data and user omniauth data. This separation follows different managing behaviors over the data. User identification should only be changed when user is re-identified (requiring immediate authorization) when user profiles could be changed by the account owner in less secured way. Each account should have only one user identification data and one user profile data. And each account might have multiple omniauth identity whoever shares the same email address.
+
+=== Identity data
+
+User registration data are managed by `User` model
+
+=== Oauth data
+
+User Omniauth data are managed by `UserOauth` model
+
+=== Profile data
+
+User Profile data are managed by `UserProfile` model
