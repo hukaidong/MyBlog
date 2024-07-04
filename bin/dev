@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+
+Bundler.require(:default, :development)
+
+class Dev < Thor
+  desc "console", "Starts a console"
+  def console
+    Pry.start
+  end
+
+  desc "serve", "Starts a server"
+  def serve
+    Bundler.unbundled_exec("jekyll serve --watch --drafts --config _config.yml,_config.dev.yml")
+  end
+
+  desc "post", "Creates a new post"
+  def post(title)
+    date = Time.now.strftime("%Y-%m-%d")
+    filename = "_drafts/#{date}-#{title.downcase.gsub(/\s+/, '-')}.md"
+    abort("File #{filename} already exists!") if File.exist?(filename)
+
+    File.open(filename, "w") do |file|
+      file.write <<-EOF
+      ---
+      title: "#{title}"
+      date: #{Time.now}
+      categories: []
+      tags: [] # Tags must be lowercase
+      published: true
+      ---
+
+      EOF
+    end
+
+    Bundler.unbundled_exec("#{ENV.fetch('EDITOR', 'vim')} #{filename}")
+  end
+
+  map "c" => :console
+  map "s" => :serve
+  map "p" => :post
+end
+
+Dev.start
