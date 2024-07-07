@@ -3,6 +3,7 @@
 :page-date: 2024-07-04 11:40:12 -0400
 :page-published: true
 :page-tags: [rails, devise]
+:page-description: Explanation of a three-component user management system in rails for game server.
 
 :github-repo: icon:repository[role="fab fa-github"]Game Server
 
