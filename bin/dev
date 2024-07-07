@@ -15,31 +15,56 @@ class Dev < Thor
     Kernel.exec("jekyll serve --watch --drafts --config _config.yml,_config.dev.yml")
   end
 
-  desc "post", "Creates a new post"
-  def post(title)
+  desc "post TITLE", "Creates a new post"
+  long_desc <<-LONGDESC
+  `post TITLE` will create a new post with the given title. The post
+  will be created in the _drafts directory and opened in the editor
+  specified by the EDITOR environment variable. If the EDITOR
+  environment variable is not set, vim will be used.
+
+  Example:
+    $ dev post "My New Post"
+  LONGDESC
+  options help: false
+  def post(*title)
+    if options[:help]
+      invoke :help, ["post"]
+      return
+    end
+
+    abort("You must provide a title.") if title.empty?
+
     date = Time.now.strftime("%Y-%m-%d")
+    title = title.join(" ")
     filename = "_drafts/#{date}-#{title.downcase.gsub(/\s+/, '-')}.md"
     abort("File #{filename} already exists!") if File.exist?(filename)
 
     File.open(filename, "w") do |file|
-      file.write <<-EOF
-      ---
-      title: "#{title}"
-      date: #{Time.now}
-      categories: []
-      tags: [] # Tags must be lowercase
-      published: true
-      ---
+      file.write <<~EOF.gsub(/^ {6}/, "")
+      = #{title}
+      :page-date: #{Time.now}
+      :page-published: true
+      :page-categories: []
+      :page-tags: [] # Tags must be lowercase
 
       EOF
     end
 
-    Bundler.unbundled_exec("#{ENV.fetch('EDITOR', 'vim')} #{filename}")
+    system("#{ENV.fetch('EDITOR', 'vim')} #{filename}")
+
+    unless $?.success?
+      File.delete(filename)
+      puts "Post discarded."
+    end
   end
 
   map "c" => :console
   map "s" => :serve
   map "p" => :post
+
+  private
+
+  def self.exit_on_failure? = true
 end
 
 Dev.start
