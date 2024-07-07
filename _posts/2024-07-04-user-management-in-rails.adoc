@@ -7,11 +7,6 @@
 
 :github-repo: icon:repository[role="fab fa-github"]Game Server
 
-[CAUTION]
-This document may be updated in the future. Please refer to the update of the belonging project.
-[NOTE]
-This is the record of user management components in https://github.com/kd-research/GameAutoMakeServer[{github-repo}, window="_blank"] project.
-
 == Concepts of Users
 
 - A *user* is an account identified by its email address and owned by the email owner.
@@ -39,3 +34,9 @@ User Omniauth data are managed by `UserOauth` model
 === Profile data
 
 User Profile data are managed by `UserProfile` model
+
+[NOTE]
+This is the record of user management components in https://github.com/kd-research/GameAutoMakeServer[{github-repo}, window="_blank"] project.
+
+[CAUTION]
+This document may be updated in the future. Please refer to the update of the belonging project.
